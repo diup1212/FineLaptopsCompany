@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+  <meta charset="UTF-8">
+  <title>Prueba</title>
+  <!--- Basic Page Needs
+================================================== -->
+  <meta charset="utf-8">
+  <title>User Information</title>
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <!-- Mobile Specific Metas
+  ================================================== -->
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <!-- CSS
+  ================================================== -->
+  <link href="css/default.css">
+  <link href="css/layout.css">
+  <link href="css/media-queries.css">
+  <link href="css/magnific-popup.css">
+
+  <!-- Script
+  ================================================== -->
+  <script src="js/modernizr.js"></script>
+
+  <!-- Favicons
+   ================================================== -->
+  <link rel="shortcut icon" href="kermit.png" >
+  <style>
+    /* Rounded border */
+    hr.rounded {
+      border-top: 8px solid #bbb;
+      border-radius: 5px;
+    }
+  </style>
+</head>
+</head>
+<body>
+<h1>CV Web Page</h1>
+<div id="response"></div>
+<div class="container">
+  Matricula
+  <input type="text" id="matricula" class="form-control">
+  Nombre Completo
+  <input type="text" id="nombre" class="form-control">
+  Direccion
+  <input type="text" id="direccion" class="form-control">
+  Email
+  <input type="text" id="email" class="form-control">
+  <button id="buscar" class="btn btn-primary">Buscar</button>
+  <button id="todos" class="btn btn-secondary">Mostrar todos</button>
+  <button id="borrar" class="btn btn-danger">Eliminar</button>
+  <button id="actualizar" class="btn btn-warning">Actualizar Nombre</button>
+  <button id="actualizar_todos" class="btn btn-success">Actualizar Todos los campos</button>
+  <button id="insertar" class="btn btn-dark">Insertar</button>
+  <table id="alumnos-grid" class="table">
+    <thead>
+    <tr>
+      <td>id</td>
+      <td>nombre</td>
+      <td>direccion</td>
+      <td>email</td>
+    </tr>
+    </thead><tbody></tbody>
+  </table></div>
+</body>
+<script src="https://code.jquery.com/jquery-3.6.3.min.js" integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
+<script>
+  // $( document ).ready(function() {
+
+  //   $("#buscar").click(function (){
+  //
+  //       $("#alumnos-grid> tbody").html('');
+  //       var idAlumno=$("#matricula").val();
+  //
+  // // $.ajax({
+  // //   method:'GET',
+  // //   url:"http://localhost:8080/api/saludar",
+  // //   datatype:"text",
+  // //   success:function (data){
+  // //     $("#response").append(data)
+  // //   }
+  // // });
+  //
+  //   // $.ajax({
+  //   //   method:'GET',
+  //   //   url:"http://localhost:8080/api/llenar",
+  //   //   datatype:"text",
+  //   //   success:function (data){
+  //   //     $("#response").append(data)
+  //   //   }
+  //   // });
+  //
+  //   $.ajax({
+  //       method:'GET',
+  //       url:"http://localhost:8080/api/all",
+  //       datatype:'json',
+  //       contentType: 'application/json',
+  //        success:function (data) {
+  //            // console.log("data", data);
+  //            $.each(data, function (i, item) {
+  //                var row = "<tr>" +
+  //                    "<td>" + item.id + "</td>" +
+  //                    "<td>" + item.nombre + "</td>" +
+  //                    "<td>" + item.direccion + "</td>" +
+  //                    "<td>" + item.email + "</td>" +
+  //                    "</tr>";
+  //                // console.log("respuesta", row);
+  //                $("#alumnos-grid > tbody").append(row);
+  //
+  //            });
+  //        }
+  //                });
+  //
+  //        });
+  // $("#buscar").click(function(){
+  //
+  //     var idAlumno=$("#matricula").val();
+  //       $.ajax({
+  //           method:'GET',
+  //           url:"http://localhost:8080/api/find",
+  //           datatype:'json',
+  //           contentType: 'application/json',
+  //           success:function (data) {
+  //               $("#alumnos-grid > tbody").html('')
+  //               console.log("data", data);
+  //               var row = "<tr id='"+idAlumno+"'>" +
+  //                   "<td>" + data.id + "</td>" +
+  //                   "<td>" + data.nombre + "</td>" +
+  //                   "<td>" + data.direccion + "</td>" +
+  //                   "<td>" + data.email + "</td>"
+  //                   "</tr>";
+  //               console.log("respuesta", row)
+  //               $("#alumnos-grid > tbody").append(row);
+  //           }
+  //       });
+  //
+  //       })//function end
+
+
+  $( document ).ready(function() {
+    // $.ajax({
+    //     method: 'GET',
+    //     url:"http://localhost:8080/api/saludar",
+    //     datatype: "text",
+    //     success: function(data){
+    //     $("#response").append(data);
+    //     }
+    // });
+    // $.ajax({
+    //     method: 'GET',
+    //     url:"http://localhost:8080/api/llenar",
+    //     datatype: "text",
+    //     success: function(data){
+    //     $("#response").append(data);
+    //     }
+    // });
+    // $.ajax({
+    //     method: 'GET',
+    //     url:"http://localhost:8080/api/all",
+    //     datatype: "json",
+    //     contentType: 'application/json',
+    //     success: function(data){
+    //         console.log("data",data);
+    //         $.each(data,function (i,item){
+    //             var row="<tr>"+
+    //                 "<td>"+item.id+"<td>"+
+    //                 "<td>"+item.nombre+"<td>"+
+    //                 "<td>"+item.direccion+"<td>"+
+    //                 "<td>"+item.email+"<td>"
+    //                 "<tr>";
+    //             console.log("respuesta",row)
+    //             $("#alumnos-grid > tbody").append(row);
+    //         });
+    //     }
+    // });
+
+    $("#buscar").click(function (){
+      $("#alumnos-grid > tbody").html('')
+      var idAlumno=$("#matricula").val();
+      $.ajax({
+        method: 'GET',
+        url:"http://localhost:8080/api/find/"+idAlumno,
+        datatype: "json",
+        contentType: 'application/json',
+        success: function(data){
+          console.log("data",data);
+
+          var row="<tr>"+
+                  "<td>"+data.id+"</td>"+
+                  "<td id='nombre-'+data>"+data.nombre+"</td>"+
+                  "<td>"+data.direccion+"</td>"+
+                  "<td>"+data.email+"</td>"
+          "</tr>";
+          console.log("respuesta",row)
+          $("#alumnos-grid > tbody").append(row);
+        }
+      });
+
+    })
+
+    $("#todos").click(function (){
+      $.ajax({
+        method: 'GET',
+        url:"http://localhost:8080/api/all",
+        datatype: "json",
+        contentType: 'application/json',
+        success: function(data){
+          $("#alumnos-grid > tbody").html('');
+          console.log("data",data);
+          $.each(data,function (i,item){
+            var row="<tr id='"+item.id+"'>"+
+                    "<td>"+item.id+"</td>"+
+                    "<td id='"+item.id+"nombre"+"'>"+item.nombre+"</td>"+
+                    "<td>"+item.direccion+"</td>"+
+                    "<td>"+item.email+"</td>"
+            "</tr>";
+            console.log("respuesta",row)
+            $("#alumnos-grid > tbody").append(row);
+          });
+        }
+      });
+    })
+
+    // $("#borrar").click(function (){
+    //     var idAlumno=$("#matricula").val();
+    //     $.ajax({
+    //         method: 'DELETE',
+    //         url:"http://localhost:8080/api/delete/"+idAlumno,
+    //         datatype: "json",
+    //         contentType: 'application/json',
+    //         success: function(data){
+    //             console.log("data",data);
+    //             $("#alumnos-grid > tbody").html('')
+    //             var row="<tr id='"+item.id+"'>"+
+    //                 "<td>"+data.id+"<td>"+
+    //                 "<td>"+data.nombre+"<td>"+
+    //                 "<td>"+data.direccion+"<td>"+
+    //                 "<td>"+data.email+"<td>"
+    //                 "<tr>";
+    //             console.log("respuesta",data)
+    //             $("#"+data.id).remove();
+    //         }
+    //     });
+    // })
+    $("#borrar").click(function (){
+      var idAlumno=$("#matricula").val();
+      $.ajax({
+        method: 'DELETE',
+        url:"http://localhost:8080/api/delete/"+idAlumno,
+        datatype: "json",
+        contentType: 'application/json',
+        success: function(data){
+          console.log("respuesta",data)
+          $("#"+data.id).remove();
+        }
+      });
+    })
+
+    // update done
+    $("#actualizar").click(function (){
+      var idAlumno=$("#matricula").val();
+      var nombre=$("#nombre").val();
+      $.ajax({
+        method: 'PUT',
+        url:"http://localhost:8080/api/update/"+idAlumno+"/name/"+nombre,
+        datatype: "json",
+        contentType: 'application/json',
+        success: function(data){
+          $("#"+data.id+"nombre").text(nombre);
+        }
+      });
+    })
+
+    //done
+    $("#actualizar_todos").click(function (){
+      var alumno={
+        id:  $("#matricula").val(),
+        nombre: $("#nombre").val(),
+        direccion: $("#direccion").val(),
+        email:  $("#email").val()
+      }
+
+      $.ajax({
+        method: 'PUT',
+        url:"http://localhost:8080/api/update",
+        data: JSON.stringify(alumno),
+        datatype: 'json',
+        contentType: 'application/json',
+        success: function(alumno){
+          $("#"+alumno.id).html('');
+          // var row=""+
+          //     "<td id='id-"+data.id+"'>"+data.id+"</td>"+
+          //     "<td id='nombre-"+data.id+"'>"+data.nombre+"</td>"+
+          //     "<td id='dir-"+data.id+"'>"+data.direccion+"</td>"+
+          //     "<td id='email-"+data.id+"'>"+data.email+"</td>"+
+          // "";
+          var row=
+                  "<td >"+alumno.id+"</td>"+
+                  "<td id='"+alumno.id+"nombre"+"'>"+alumno.nombre+"</td>"+
+                  "<td id='"+alumno.id+"direccion"+"'>"+alumno.direccion+"</td>"+
+                  "<td id='"+alumno.id+"email"+"'>"+alumno.email+"</td>";
+          console.log("respuesta",row);
+          $("#"+alumno.id).append(row);
+        }
+      });
+    })
+
+    // Insertar done
+    $("#insertar").click(function (){
+      var alumno = {
+        id: $("#matricula").val(),
+        nombre:$("#nombre").val(),
+        direccion: $("#direccion").val(),
+        email: $("#email").val()
+      }
+
+      $.ajax({
+        method: 'POST',
+        url:"http://localhost:8080/api/insertar",
+        data: JSON.stringify(alumno),
+        datatype: "JSON",
+        contentType: 'application/json',
+        success: function(data){
+          var row="<tr id='"+alumno.id+"'>"+
+                  "<td >"+alumno.id+"</td>"+
+                  "<td id='"+alumno.id+"nombre"+"'>"+alumno.nombre+"</td>"+
+                  "<td id='"+alumno.id+"direccion"+"'>"+alumno.direccion+"</td>"+
+                  "<td id='"+alumno.id+"correo"+"'>"+alumno.email+"</td>"
+          "</tr>";
+          $("#alumnos-grid > tbody").append(row);
+        }
+      });
+    })
+
+  });
+</script>
+
+
+
+</html>
